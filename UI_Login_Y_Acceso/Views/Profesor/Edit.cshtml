@@ -1,0 +1,132 @@
+﻿@model Entidades.Profesor
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar</h1>
+<br />
+
+<h4>Datos Del Docente:</h4>
+<hr />
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="IdProfesor" />
+
+    <!-- FILA #1 -->
+    <div class="row">
+
+        <div class="form-group col-md-4">
+            <label class="control-label">NOMBRES:</label>
+            <input asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="control-label">APELLIDOS:</label>
+            <input asp-for="Apellidos" class="form-control" />
+            <span asp-validation-for="Apellidos" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label class="control-label">RESIDENCIA:</label>
+            <select name="IdCiudadEnPersona" class="form-control" asp-items="ViewBag.Lista_Ciudades"></select>
+            <span asp-validation-for="IdCiudadEnPersona" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <!-- FILA #2 -->
+    <div class="row">
+
+        <div class="form-group col-md-5">
+            <label class="control-label">EMAIL:</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-md-2">
+            <label class="control-label">Tipo Docente:</label>
+            <select name="IdRolEnPersona" class="form-control" asp-items="ViewBag.Lista_Roles"></select>
+            <span asp-validation-for="IdRolEnPersona" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label class="control-label">N° Aula:</label>
+            <input asp-for="Aula" class="form-control" />
+            <span asp-validation-for="Aula" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <!-- FILA #1 -->
+    <div class="row">
+
+        <div class="form-group col-md-4">
+            <label class="control-label">FOTOGRAFIA:</label>
+            <input type="file" id="ImagenProfesor" onchange="MostrarImagenProfesor()" accept="image/*" asp-for="Fotografia" class="form-control" />
+            <div>
+                @{
+                    string ImagenBase64 = "";
+                    if (Model.Fotografia != null && Model.Fotografia.Length > 0)
+                    {
+                        string Cadena_Imagen = Convert.ToBase64String(Model.Fotografia);
+                        ImagenBase64 = "data:image/jpeg;base64," + Cadena_Imagen;
+                    }
+                    if (ImagenBase64.Trim().Length > 0)
+                    {
+                        <img id="VistaImagenProfesor" src="@ImagenBase64" style="max-width:130px; max-height:130px" />
+                    }
+                    else
+                    {
+                        <img id="VistaImagenProfesor" src="~/img/defecto.jpg" style="max-width:130px; max-height:130px" />
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+
+    <!-- BOTONES -->
+    <div class="row">
+
+        <div class="form-group">
+            <input type="submit" value="GUARDAR" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">CANCELAR</a>
+        </div>
+
+    </div>
+
+
+</form>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <!-- Vista Previa De Imagen -->
+    <script>
+
+        function MostrarImagenProfesor() {
+            var Imagen_Obtenida = document.getElementById('ImagenProfesor');
+
+            if (Imagen_Obtenida.files && Imagen_Obtenida.files[0]) {
+                // Lector De Archivos:
+                var Lector = new FileReader();
+
+                // Guardamos la imagen en un evento
+                Lector.onload = function (e) {
+                    document.getElementById('VistaImagenProfesor').src = e.target.result;
+                }
+
+                //Convertimos el archivo en Base64:
+                Lector.readAsDataURL(Imagen_Obtenida.files[0]);
+            }
+        }
+
+    </script>
+
+}

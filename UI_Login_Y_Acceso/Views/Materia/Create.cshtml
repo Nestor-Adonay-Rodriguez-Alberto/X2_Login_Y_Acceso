@@ -1,0 +1,58 @@
+﻿@model Entidades.Materia
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1><br />
+
+<h5>Datos De La Materia</h5>
+<hr />
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <!-- FILA 1 -->
+    <div class="row">
+
+        <div class="form-group col-md-3">
+            <label class="control-label">NOMBRE:</label>
+            <input asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label class="control-label">HORARIO</label>
+            <input asp-for="Horario" class="form-control" />
+            <span asp-validation-for="Horario" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <!-- FILA 1 -->
+    <div class="row">
+
+        <div class="form-group col-md-4">
+            <label class="control-label">Docente A Cargo:</label>
+            <select name="IdProfesorEnMateria" class="form-control" asp-items="ViewBag.Lista_Profesores"></select>
+            <span asp-validation-for="IdProfesorEnMateria" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <!-- FILA 1 -->
+    <div class="r0w">
+
+        <div class="form-group col-md-12">
+            <input type="submit" value="GUARDAR" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">CANCELAR</a>
+
+        </div>
+
+    </div>
+
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

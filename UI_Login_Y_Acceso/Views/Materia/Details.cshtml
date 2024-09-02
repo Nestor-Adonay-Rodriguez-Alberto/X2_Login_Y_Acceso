@@ -1,0 +1,57 @@
+﻿@model Entidades.Materia
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h5>Datos De La Materia:</h5>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayName("NOMBRE:")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("HORARIO:")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Horario)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("DOCENTE A CARGO")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Objeto_Profesor.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("FOTOGRAFIA DOCENTE")
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                string ImagenBase64 = "";
+                if (Model.Objeto_Profesor.Fotografia != null && Model.Objeto_Profesor.Fotografia.Length > 0)
+                {
+                    string Cadena_Imagen = Convert.ToBase64String(Model.Objeto_Profesor.Fotografia);
+                    ImagenBase64 = "data:image/jpeg;base64," + Cadena_Imagen;
+                }
+                if (ImagenBase64.Trim().Length > 0)
+                {
+                    <img id="VistaImagenProfesor" src="@ImagenBase64" style="max-width:150px; max-height:150px" />
+                }
+                else
+                {
+                    <img id="VistaImagenProfesor" src="~/img/defecto.jpg" style="max-width:150px; max-height:150px" />
+                }
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdMateria" class="btn btn-primary">EDITAR</a>
+    <a asp-action="Index" class="btn btn-secondary">CANCELAR</a>
+</div>

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Entidades.Materia>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Registro De Materias</h1>
+
+<p>
+    <a asp-action="Create">Crear Nueva</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("NOMBRE")
+            </th>
+            <th>
+                @Html.DisplayName("HORARIO")
+            </th>
+            <th>
+                @Html.DisplayName("DOCENTE A CARGO")
+            </th>
+            <th>
+                @Html.DisplayName("FOTOGRAFIA DOCENTE")
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Horario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Objeto_Profesor.Nombre)
+            </td>
+                <td>
+                    @{
+                        string ImagenBase64 = "";
+                        if (item.Objeto_Profesor.Fotografia != null && item.Objeto_Profesor.Fotografia.Length > 0)
+                        {
+                            string Cadena_Imagen = Convert.ToBase64String(item.Objeto_Profesor.Fotografia);
+                            ImagenBase64 = "data:image/jpeg;base64," + Cadena_Imagen;
+                        }
+                        if (ImagenBase64.Trim().Length > 0)
+                        {
+                            <img id="VistaImagenProfesor" src="@ImagenBase64" style="max-width:150px; max-height:150px" />
+                        }
+                        else
+                        {
+                            <img id="VistaImagenProfesor" src="~/img/defecto.jpg" style="max-width:150px; max-height:150px" />
+                        }
+                    }
+                </td>
+
+                <td style="padding-left:0px;">
+                    <table>
+                        <td>
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.IdMateria">Editar</a>
+
+                        </td>
+                        <td>
+                            <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.IdMateria">Detalles</a>
+
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdMateria">Eliminar</a>
+
+                        </td>
+                    </table>
+                </td>
+            </tr>
+}
+    </tbody>
+</table>

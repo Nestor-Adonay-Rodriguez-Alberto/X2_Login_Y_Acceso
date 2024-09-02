@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Entidades.Profesor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Registro De Docentes</h1>
+<br />
+
+<p>
+    <a asp-action="Create">Crear Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("NOMBRES")
+            </th>
+            <th>
+                @Html.DisplayName("APELLIDOS")
+            </th>
+            <th>
+                @Html.DisplayName("EMAIL")
+            </th>
+            <th>
+                @Html.DisplayName("CONTRASEÑA")
+            </th>
+            <th>
+                @Html.DisplayName("RESIDENCIA")
+            </th>
+            <th>
+                @Html.DisplayName("TIPO ROL")
+            </th>
+            <th>
+                @Html.DisplayName("AULA")
+            </th>
+            <th>
+                @Html.DisplayName("FOTOGRAFIA")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellidos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Objeto_Ciudad.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Objeto_Rol.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aula)
+                </td>
+                <td>
+                    @{
+                        string ImagenBase64 = "";
+                        if (item.Fotografia != null && item.Fotografia.Length > 0)
+                        {
+                            string Cadena_Imagen = Convert.ToBase64String(item.Fotografia);
+                            ImagenBase64 = "data:image/jpeg;base64," + Cadena_Imagen;
+                        }
+                        if (ImagenBase64.Trim().Length > 0)
+                        {
+                            <img id="VistaImagenProfesor" src="@ImagenBase64" style="max-width:150px; max-height:150px" />
+                        }
+                        else
+                        {
+                            <img id="VistaImagenProfesor" src="~/img/defecto.jpg" style="max-width:150px; max-height:150px" />
+                        }
+                    }
+                </td>
+                <td style="padding-left:0px;">
+                    <table>
+                        <td>
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.IdProfesor">Editar</a>
+
+                        </td>
+                        <td>
+                            <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.IdProfesor">Detalles</a>
+
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdProfesor">Eliminar</a>
+
+                        </td>
+                    </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Entidades.Ciudad>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Registro De Ciudades</h1>
+
+<p>
+    <a asp-action="Create">Crear Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("CIUDAD")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+                <td style="padding-left:0px;">
+                    <table>
+                        <td>
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.IdCiudad">Editar</a>
+
+                        </td>
+                        <td>
+                            <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.IdCiudad">Detalles</a>
+
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdCiudad">Eliminar</a>
+
+                        </td>
+                    </table>
+                </td>
+            </tr>
+}
+    </tbody>
+</table>

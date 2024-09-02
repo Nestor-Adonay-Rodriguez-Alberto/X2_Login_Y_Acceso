@@ -1,0 +1,49 @@
+﻿@model Entidades.Profesor
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1><br />
+
+<h5>Ingresa Tus Datos</h5>
+<hr />
+<form asp-action="Login">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <!-- FILA #1 -->
+    <div class="row">
+
+        <div class="form-group col-md-5">
+            <label class="control-label">CORREO ELECTRONICO:</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <!-- FILA #2 -->
+    <div class="row">
+
+        <div class="form-group col-md-2">
+            <label class="control-label">CONTRASEÑA:</label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+    </div><br />
+
+    <!-- BOTONES -->
+    <div class="row">
+
+        <div class="form-group col-md-12">
+            <input type="submit" value="LOGIN" class="btn btn-primary" />
+            <span>@ViewBag.Error</span>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
